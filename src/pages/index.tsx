@@ -21,12 +21,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/components/ui/use-toast"; // 알림을 표시하는데 사용
 
 import { motion } from "framer-motion";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
-import { useForm } from "react-hook-form";
+import { useForm } from "react-hook-form"; // 입력 유효성 검사를 수행하고 제출되는 데이터를 처리한다.
 import { zodResolver } from "@hookform/resolvers/zod";
 import { registerSchema } from "@/validators/auth";
 import { z } from "zod";
@@ -76,6 +76,8 @@ export default function Home() {
         </CardHeader>
         <CardContent>
           <Form {...form}>
+            {/* onSubmit 함수는 폼이 제출될 때 호출된다. 입력된 데이터를 확인하고, 비밀번호가 일치하는지 확인하여 */}
+            {/* 일치하지 않으면 오류 메시지를 표시한다. 그렇지 않으면 입력된 데이터를 경고창에 표시한다. */}
             <form
               onSubmit={form.handleSubmit(onSubmit)}
               className="relative space-y-3 overflow-x-hidden"
@@ -191,6 +193,7 @@ export default function Home() {
                 <Button className={cn({ hidden: step === 0 })} type="submit">
                   계정 등록하기
                 </Button>
+                {/* 'step'이 1일 때 버튼을 숨기는 역할을 한다. 두번째 다음 단계에서는 다음 단계로 진행하는 버튼을 보이지 않게 하기 위해서. */}
                 <Button
                   type="button"
                   className={cn({ hidden: step === 1 })}
@@ -200,7 +203,7 @@ export default function Home() {
                     const emailState = form.getFieldState("email");
                     const usernameState = form.getFieldState("username");
                     const roleState = form.getFieldState("role");
-
+                    // isDirty는 사용자가 해당 필드를 수정했는지 여부를 나타낸다.
                     if (!phoneState.isDirty || phoneState.invalid) return;
                     if (!emailState.isDirty || emailState.invalid) return;
                     if (!usernameState.isDirty || usernameState.invalid) return;
